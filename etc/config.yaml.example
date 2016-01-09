@@ -1,0 +1,10 @@
+---
+plex:
+   server: localhost
+   machineIdentifier: <machine_id>
+   api_key: <api_key>
+vera:
+   hub_ip: <vera_hub_ip>
+   scene_start: <vera_scene_#>
+   scene_pause: <vera_scene_#>
+   scene_stop: <vera_scene_#>

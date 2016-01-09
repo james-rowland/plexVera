@@ -1,0 +1,13 @@
+# PlexVera Temp files
+plexVera.log
+etc/config.yaml
+
+# IDEA artifacts
+*.iml
+*.ipr
+*.iws
+*.idea
+
+# Misc
+.DS_Store
+node_modules
