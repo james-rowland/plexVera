@@ -25,7 +25,7 @@ class PlexVera
 
   def initialize
     begin
-      $config = YAML.load_file(File.join(File.expand_path(File.dirname(__FILE__)), '../etc/config.yaml'))
+      $config = YAML.load_file(File.join(File.expand_path(File.dirname(__FILE__)), '../config.yaml'))
     rescue Errno::ENOENT => e
       abort('Configuration file not found.  Exiting...')
     end
