@@ -48,6 +48,14 @@ class PlexVera
   end
 
   def main
+    begin
+      File.write("#{ $0 }.pid", $$)
+    end
+    at_exit do
+      File.delete("#{ $0 }.pid")
+      exit
+    end
+
     vera = Vera.new($config)
     plex = Plex.new($config)
     $state = 'stopped'
