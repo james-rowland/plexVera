@@ -9,7 +9,6 @@ require 'optparse'
 
 require_relative 'plex'
 require_relative 'vera'
-require_relative 'yamaha'
 
 class PlexVera
   $options = {
@@ -51,7 +50,6 @@ class PlexVera
   def main
     vera = Vera.new($config)
     plex = Plex.new($config)
-    yamaha = Yamaha.new($config)
     $state = 'stopped'
     $pauseTime = 0
 
@@ -61,12 +59,6 @@ class PlexVera
       next
     end
       isPlaying = false
-
-      # if(yamaha.status() == 'On')
-      #   print 'yamaha amp on.'
-      # else
-      #   print 'yamaha amp on standby.'
-      # end
 
       if nowPlaying['size'].to_i == 1
         client = nowPlaying['Video']
