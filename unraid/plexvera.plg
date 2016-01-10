@@ -1,0 +1,241 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+    <!ENTITY name      "plexvera">
+    <!ENTITY author    "JR">
+    <!ENTITY version   "2016.01.09">
+    <!ENTITY pluginURL "https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg">
+    ]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
+
+  <!--
+  2016-01-09 - first release
+
+  This Plugin installs PlexVera.
+  -->
+
+  <FILE Name="/boot/packages/ruby-1.9.3_p448-x86_64-1.txz" Run="upgradepkg --install-new">
+    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/ruby-1.9.3_p448-x86_64-1.txz</URL>
+    <MD5>13fe939b565e81fe4a57ddbdf8217286</MD5>
+  </FILE>
+
+  <FILE Name="/boot/packages/libyaml-0.1.4-x86_64-1.txz" Run="upgradepkg --install-new">
+    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/l/libyaml-0.1.4-x86_64-1.txz</URL>
+    <MD5>8600b6e8eb8afd355bb7a0e2473e2acd</MD5>
+  </FILE>
+
+  <FILE Name="/boot/packages/rubygems-1.8.24.tgz" Run="upgradepkg --install-new">
+    <URL>http://production.cf.rubygems.org/rubygems/rubygems-1.8.24.tgz</URL>
+    <MD5>3a555b9d579f6a1a1e110628f5110c6b</MD5>
+  </FILE>
+
+  <FILE Name="/boot/config/plugins/&name;/bin/plexVera.rb">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/plexVera.rb</URL>
+  </FILE>
+
+  <FILE Name="/boot/config/plugins/&name;/bin/plex.rb">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/plex.rb</URL>
+  </FILE>
+
+  <FILE Name="/boot/config/plugins/&name;/bin/vera.rb">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/vera.rb</URL>
+  </FILE>
+
+  <FILE Name="/boot/config/plugins/&name;/Gemfile">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/Gemfile</URL>
+  </FILE>
+
+  <FILE Name="/boot/config/plugins/&name;/plexvera.png">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.png</URL>
+  </FILE>
+
+  <FILE Name="/usr/local/emhttp/plugins/&name;/plexvera.png">
+    <LOCAL>/boot/config/plugins/&name;/plexvera.png</LOCAL>
+  </FILE>
+
+  <FILE Name="/boot/config/plugins/&name;/config.yaml">
+    <INLINE>
+      <![CDATA[
+---
+plex:
+   server: localhost
+   machineIdentifier: xxxxxxxxxxxx
+   api_key: xxxxxxxxxxxxxxxxxxxx
+vera:
+   hub_ip: 192.168.1.2
+   scene_start: 1
+   scene_pause: 1
+   scene_stop: 1
+]]>
+    </INLINE>
+  </FILE>
+
+  <FILE Name="/usr/local/emhttp/plugins/&name;/Plexvera.page">
+    <INLINE>
+      <![CDATA[
+Menu="NetworkServices"
+Icon="plexvera.png"
+Version="2016.01.09"
+Author="JR"
+Title="PlexVera"
+---
+<?php
+$plexvera_installed = file_exists( "/boot/config/plugins/plexvera/bin/plexVera.rb" ) ? "yes" : "no";
+if ($plexvera_installed=="yes")
+{
+  $plexvera_running = file_exists( "/boot/config/plugins/plexvera/bin/plexVera.rb.pid") ? "yes" : "no";
+}
+?>
+    <div style="width: 49%; float:left">
+      <div id="title">
+		<span class="left">Status:&#32;<img src='/plugins/plexvera/device_status.png' width="16px">
+      <?if ($plexvera_installed=="yes"):?>
+      <?if ($plexvera_running=="yes"):?>
+      <span class="green"><b>RUNNING</b></span>
+      <?else:?>
+      <span class="red"><b>STOPPED</b></span>
+      <?endif;?>
+      <?else:?>
+      <span class="red"><b>NOT INSTALLED</b></span>
+      <?endif;?>
+		</span>
+      </div>
+      <?if ($plexvera_installed=="yes"):?>
+      <?if ($plexvera_running=="yes"):?>
+      <div style="position:relative;float:left;width:50%;text-align:right; margin-bottom:24px">
+        <form name="sabnzbd_start_stop" method="POST" action="/update.htm" target="progressFrame">
+          <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera stop">
+          <input type="submit" name="runCmd" value="Stop">
+        </form>
+      </div>
+      <div style="position:relative;float:left;width:50%;margin-bottom:24px">
+        <form name="sabnzbd_restart" method="POST" action="/update.htm" target="progressFrame">
+          <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera restart">
+          <input type="submit" name="runCmd" value="Restart">
+        </form>
+      </div>
+      <?else:?>
+      <div style="position:relative;float:left;width:100%;text-align:center;margin-bottom:24px">
+        <form name="sabnzbd_start" method="POST" action="/update.htm" target="progressFrame">
+          <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera start">
+          <input type="submit" name="runCmd" value="Start">
+        </form>
+      </div>
+      <?endif;?>
+      <?endif;?>
+    </div>
+    <div style="width: 49%; float:right">
+      <div id="title">
+        <span class="left">Configuration:&#32;<img src='/plugins/dynamix.vm.manager/icons/vmmanager.png'></span>
+      </div>
+    </div>
+      ]]>
+    </INLINE>
+  </FILE>
+
+  <FILE Name="/etc/rc.d/rc.plexvera" Mode="0770">
+    <INLINE>
+      <![CDATA[
+#!/bin/sh
+# start|stop|restart PlexVera.
+
+DAEMON=/boot/config/plugins/plexVera/bin/plexVera.rb
+PIDFILE=/boot/config/plugins/plexVera/bin/plexVera.rb.pid
+RUNAS=nobody
+
+plexvera_start()
+{
+  # no-op if already running
+  if [ -r $PIDFILE ]; then
+    return
+  fi
+
+  echo "Starting SABnzbd: $CMDLINE"
+  sleep 1
+  sudo -H -u $RUNAS /bin/bash -c 'nohup '$DAEMON' > /dev/null 2>&1 &'
+  echo "... OK"
+  sleep 1
+}
+
+plexvera_stop()
+{
+  # no-op if not running
+  if [ ! -r $PIDFILE ]; then
+    return
+  fi
+
+  echo "Stopping SABnzbd..."
+  sleep 1
+  kill $(cat $PIDFILE)
+
+  echo "... OK"
+  sleep 1
+}
+
+plexvera_restart()
+{
+  plexvera_stop
+  sleep 3
+  plexvera_start
+}
+
+plexvera_updateplg()
+{
+  echo "Updating plugin"
+}
+
+case "$1" in
+  'start')
+    plexvera_start
+  ;;
+  'stop')
+    plexvera_stop
+  ;;
+  'restart')
+    plexvera_restart
+  ;;
+  'updateplg')
+    plexvera_updateplg
+  ;;
+  *)
+  echo "usage $0 start|stop|restart|updateplg"
+esac
+]]>
+    </INLINE>
+  </FILE>
+
+  <FILE Name="/tmp/plexvera-install" Run="/bin/bash">
+    <INLINE>
+      <![CDATA[
+cd /boot/config/plugins/plexvera
+
+echo 'Installing bundler...'
+gem install bundler
+echo 'Finished.'
+
+echo 'Running bundle install...'
+bundle install
+echo 'Finished.'
+
+echo 'Running PlexVera...'
+/etc/rc.d/rc.plexvera start
+echo 'Finished.'
+]]>
+    </INLINE>
+  </FILE>
+
+  <!-- The 'remove' script. -->
+  <FILE Run="/bin/bash" Method="remove">
+    <INLINE>
+      /etc/rc.d/rc.plexvera stop
+      removepkg &name;
+      rm /tmp/plexvera-install
+      rm /etc/rc.d/rc.plexvera
+      rm -r /usr/local/emhttp/plugins/&name;
+      rm -r /boot/config/plugins/&name;
+    </INLINE>
+  </FILE>
+
+
+</PLUGIN>
