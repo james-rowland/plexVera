@@ -1,9 +1,9 @@
 plexVera
 =======
 
-Program to integrate Plex with Vera.
+Program to integrate Plex with Vera (also doubles as an unraid plugin).
 
-Based on the work done by bstascavage https://github.com/bstascavage/plexHue
+Based on the work done by bstascavage https://github.com/bstascavage/plexHue.
 
 
 ## Introduction
@@ -11,17 +11,21 @@ This program runs scenes from Vera based on Plex playback.  It runs a user defin
 
 
 ## Prerequisites
-1.  Ruby installed (at least version 1.9.3) and ruby-dev.
-2.  Your Vera Hub up and configured.
-3.  A PlexPass membership (the required API only works when you have PlexPass)
+1.  Your Vera Hub up and configured.
+2.  A PlexPass membership (the required API only works when you have PlexPass).
+3.  Unraid or ruby (for standalone mode).
 
-    
+
+## Install on Unraid
+1.  Download unraid/plexvera.plg and install on unraid /boot/config/plugins (or use UI to install plg file).
+
+
 ## Config file
 
 ##### plex
 `server` - IP address of your Plex server.  Defaults to `localhost`.  Optional.
 
-`machineIdentifier` - Unique identifier of your Plex client.  You can find this by starting up a video on your device and then running `bin/getMachineID.rb` and finding your device in the output.  Required.
+`machineIdentifier` - Unique identifier of your Plex client.  You can find this looking at <plexserver_ip>:32400/status/sessions.  Required.
 
 `api_key` - Your Plex API key.  This can be found by searching for your device here (it is the 'token' field): https://plex.tv/devices.xml.  Required.
 
