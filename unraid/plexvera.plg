@@ -15,6 +15,11 @@
   This Plugin installs PlexVera.
   -->
 
+  <FILE Name="/boot/packages/make-3.82-x86_64-4.txz" Run="upgradepkg --install-new">
+    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/make-3.82-x86_64-4.txz</URL>
+    <MD5>c7a0bca1e5bebecdfe7b21725581c83b</MD5>
+  </FILE>
+
   <FILE Name="/boot/packages/ruby-1.9.3_p448-x86_64-1.txz" Run="upgradepkg --install-new">
     <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/ruby-1.9.3_p448-x86_64-1.txz</URL>
     <MD5>13fe939b565e81fe4a57ddbdf8217286</MD5>
