@@ -124,6 +124,12 @@ if ($plexvera_installed=="yes")
       </div>
       <?endif;?>
       <?endif;?>
+      <div style="position:relative;float:left;width:100%;text-align:center;margin-bottom:24px">
+        <form name="sabnzbd_update" method="POST" action="/update.htm" target="progressFrame">
+          <input type="hidden" name="cmd" value="/etc/rc.d/rc.sabnzbd updateplg">
+          <input type="submit" name="runCmd" value="Update PLG">
+        </form>
+      </div>
     </div>
     <div style="width: 49%; float:right">
       <div id="title">
@@ -138,7 +144,7 @@ if ($plexvera_installed=="yes")
     <INLINE>
       <![CDATA[
 #!/bin/sh
-# start|stop|restart PlexVera.
+# start|stop|restart|updateplg PlexVera.
 
 DAEMON=/boot/config/plugins/plexVera/bin/plexVera.rb
 PIDFILE=/boot/config/plugins/plexVera/bin/plexVera.rb.pid
@@ -182,7 +188,19 @@ plexvera_restart()
 
 plexvera_updateplg()
 {
-  echo "Updating plugin"
+  plexvera_stop
+  cd /boot/config/plugins
+  [ -f plexvera.plg.old ] && rm -f plexvera.plg.old
+  if [ -f plexvera.plg ]; then
+    mv plexvera.plg plexvera.plg.old
+    echo "Updating plugin"
+    wget -q --no-check-certificate https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg
+    /usr/local/sbin/installplg /boot/config/plugins/plexvera.plg
+  else
+    echo "Updating plugin"
+    wget -q --no-check-certificate https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg
+    /usr/local/sbin/installplg /boot/config/plugins/plexvera.plg
+  fi
 }
 
 case "$1" in
