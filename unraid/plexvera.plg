@@ -109,20 +109,20 @@ if ($plexvera_installed=="yes")
       <?if ($plexvera_installed=="yes"):?>
       <?if ($plexvera_running=="yes"):?>
       <div style="position:relative;float:left;width:50%;text-align:right; margin-bottom:24px">
-        <form name="sabnzbd_start_stop" method="POST" action="/update.htm" target="progressFrame">
+        <form name="plexvera_start_stop" method="POST" action="/update.htm" target="progressFrame">
           <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera stop">
           <input type="submit" name="runCmd" value="Stop">
         </form>
       </div>
       <div style="position:relative;float:left;width:50%;margin-bottom:24px">
-        <form name="sabnzbd_restart" method="POST" action="/update.htm" target="progressFrame">
+        <form name="plexvera_restart" method="POST" action="/update.htm" target="progressFrame">
           <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera restart">
           <input type="submit" name="runCmd" value="Restart">
         </form>
       </div>
       <?else:?>
       <div style="position:relative;float:left;width:100%;text-align:center;margin-bottom:24px">
-        <form name="sabnzbd_start" method="POST" action="/update.htm" target="progressFrame">
+        <form name="plexvera_start" method="POST" action="/update.htm" target="progressFrame">
           <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera start">
           <input type="submit" name="runCmd" value="Start">
         </form>
@@ -130,7 +130,7 @@ if ($plexvera_installed=="yes")
       <?endif;?>
       <?endif;?>
       <div style="position:relative;float:left;width:100%;text-align:center;margin-bottom:24px">
-        <form name="sabnzbd_update" method="POST" action="/update.htm" target="progressFrame">
+        <form name="plexvera_update" method="POST" action="/update.htm" target="progressFrame">
           <input type="hidden" name="cmd" value="/etc/rc.d/rc.plexvera updateplg">
           <input type="submit" name="runCmd" value="Update PLG">
         </form>
@@ -162,7 +162,7 @@ plexvera_start()
     return
   fi
 
-  echo "Starting SABnzbd: $CMDLINE"
+  echo "Starting PlexVera: $CMDLINE"
   sleep 1
   sudo -H -u $RUNAS /bin/bash -c 'nohup '$DAEMON' > /dev/null 2>&1 &'
   echo "... OK"
@@ -176,7 +176,7 @@ plexvera_stop()
     return
   fi
 
-  echo "Stopping SABnzbd..."
+  echo "Stopping PlexVera..."
   sleep 1
   kill $(cat $PIDFILE)
 
