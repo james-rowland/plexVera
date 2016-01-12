@@ -25,6 +25,11 @@
     <MD5>2cb093fdf5aa5267ffc58b2dd0366c86</MD5>
   </FILE>
 
+  <FILE Name="/boot/packages/libmpc-0.8.2-x86_64-2.txz" Run="upgradepkg --install-new">
+    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/l/libmpc-0.8.2-x86_64-2.txz</URL>
+    <MD5>209a663c51726a30eb26cee0c3f0f9e7</MD5>
+  </FILE>
+
   <FILE Name="/boot/packages/ruby-1.9.3_p448-x86_64-1.txz" Run="upgradepkg --install-new">
     <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/ruby-1.9.3_p448-x86_64-1.txz</URL>
     <MD5>13fe939b565e81fe4a57ddbdf8217286</MD5>
