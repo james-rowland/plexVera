@@ -49,7 +49,7 @@ if ($plexvera_installed=="yes")
 ?>
     <div style="width: 49%; float:left">
       <div id="title">
-		<span class="left">Status:&#32;<img src='/plugins/plexvera/device_status.png' width="16px">
+		<span class="left">Status:&#32;<img src='/plugins/plexvera/plexvera.png' width="16px">
       <?if ($plexvera_installed=="yes"):?>
       <?if ($plexvera_running=="yes"):?>
       <span class="green"><b>RUNNING</b></span>
@@ -148,7 +148,6 @@ plexvera_restart()
 
 plexvera_updateplg()
 {
-  plexvera_stop
   cd /boot/config/plugins
   [ -f plexvera.plg.old ] && rm -f plexvera.plg.old
   if [ -f plexvera.plg ]; then
