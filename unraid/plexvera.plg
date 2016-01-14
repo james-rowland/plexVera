@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
     <!ENTITY name      "plexvera">
     <!ENTITY author    "JR">
-    <!ENTITY version   "2016.01.09">
+    <!ENTITY version   "2016.01.15">
     <!ENTITY pluginURL "https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg">
     ]>
 
@@ -36,7 +36,7 @@
       <![CDATA[
 Menu="NetworkServices"
 Icon="plexvera.png"
-Version="2016.01.09"
+Version="2016.01.15"
 Author="JR"
 Title="PlexVera"
 ---
@@ -106,8 +106,8 @@ if ($plexvera_installed=="yes")
 #!/bin/sh
 # start|stop|restart|updateplg PlexVera.
 
-DAEMON=/boot/config/plugins/plexVera/bin/plexVera.php
-PIDFILE=/boot/config/plugins/plexVera/bin/plexVera.php.pid
+DAEMON=/boot/config/plugins/plexvera/bin/plexVera.php
+PIDFILE=/boot/config/plugins/plexvera/bin/plexVera.php.pid
 RUNAS=nobody
 
 plexvera_start()

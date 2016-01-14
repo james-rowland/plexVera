@@ -9,7 +9,6 @@ function initialize()
 		die("Already running.\n");
 	
 	register_shutdown_function('terminate');
-	pcntl_signal(SIGTERM, "terminate");
 	
 	try {
 		$config_path = dirname(__FILE__) . '/../config.ini';
