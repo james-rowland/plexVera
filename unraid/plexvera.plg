@@ -15,50 +15,12 @@
   This Plugin installs PlexVera.
   -->
 
-  <FILE Name="/boot/packages/make-3.82-x86_64-4.txz" Run="upgradepkg --install-new">
-    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/make-3.82-x86_64-4.txz</URL>
-    <MD5>c7a0bca1e5bebecdfe7b21725581c83b</MD5>
+  <FILE Name="/boot/config/plugins/&name;/bin/plexVera.php">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/plexVera.php</URL>
   </FILE>
 
-  <FILE Name="/boot/packages/gcc-4.8.2-x86_64-1.txz" Run="upgradepkg --install-new">
-    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/gcc-4.8.2-x86_64-1.txz</URL>
-    <MD5>2cb093fdf5aa5267ffc58b2dd0366c86</MD5>
-  </FILE>
-
-  <FILE Name="/boot/packages/libmpc-0.8.2-x86_64-2.txz" Run="upgradepkg --install-new">
-    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/l/libmpc-0.8.2-x86_64-2.txz</URL>
-    <MD5>209a663c51726a30eb26cee0c3f0f9e7</MD5>
-  </FILE>
-
-  <FILE Name="/boot/packages/ruby-1.9.3_p448-x86_64-1.txz" Run="upgradepkg --install-new">
-    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/d/ruby-1.9.3_p448-x86_64-1.txz</URL>
-    <MD5>13fe939b565e81fe4a57ddbdf8217286</MD5>
-  </FILE>
-
-  <FILE Name="/boot/packages/libyaml-0.1.4-x86_64-1.txz" Run="upgradepkg --install-new">
-    <URL>http://mirrors.slackware.com/slackware/slackware64-14.1/slackware64/l/libyaml-0.1.4-x86_64-1.txz</URL>
-    <MD5>8600b6e8eb8afd355bb7a0e2473e2acd</MD5>
-  </FILE>
-
-  <FILE Name="/boot/packages/rubygems-1.8.24.tgz" Run="upgradepkg --install-new">
-    <URL>http://production.cf.rubygems.org/rubygems/rubygems-1.8.24.tgz</URL>
-    <MD5>3a555b9d579f6a1a1e110628f5110c6b</MD5>
-  </FILE>
-
-  <FILE Name="/boot/config/plugins/&name;/bin/plexVera.rb">
-    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/plexVera.rb</URL>
-  </FILE>
-
-  <FILE Name="/boot/config/plugins/&name;/bin/plex.rb">
-    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/plex.rb</URL>
-  </FILE>
-
-  <FILE Name="/boot/config/plugins/&name;/bin/vera.rb">
-    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/vera.rb</URL>
-  </FILE>
-
-  <FILE Name="/boot/config/plugins/&name;/Gemfile">
-    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/Gemfile</URL>
+  <FILE Name="/boot/config/plugins/&name;/config.ini">
+    <URL>https://raw.githubusercontent.com/james-rowland/plexVera/master/config.ini.sample</URL>
   </FILE>
 
   <FILE Name="/boot/config/plugins/&name;/plexvera.png">
@@ -67,23 +29,6 @@
 
   <FILE Name="/usr/local/emhttp/plugins/&name;/plexvera.png">
     <LOCAL>/boot/config/plugins/&name;/plexvera.png</LOCAL>
-  </FILE>
-
-  <FILE Name="/boot/config/plugins/&name;/config.yaml">
-    <INLINE>
-      <![CDATA[
----
-plex:
-   server: localhost
-   machineIdentifier: xxxxxxxxxxxx
-   api_key: xxxxxxxxxxxxxxxxxxxx
-vera:
-   hub_ip: 192.168.1.2
-   scene_start: 1
-   scene_pause: 1
-   scene_stop: 1
-]]>
-    </INLINE>
   </FILE>
 
   <FILE Name="/usr/local/emhttp/plugins/&name;/Plexvera.page">
@@ -96,10 +41,10 @@ Author="JR"
 Title="PlexVera"
 ---
 <?php
-$plexvera_installed = file_exists( "/boot/config/plugins/plexvera/bin/plexVera.rb" ) ? "yes" : "no";
+$plexvera_installed = file_exists( "/boot/config/plugins/plexvera/bin/plexVera.php" ) ? "yes" : "no";
 if ($plexvera_installed=="yes")
 {
-  $plexvera_running = file_exists( "/boot/config/plugins/plexvera/bin/plexVera.rb.pid") ? "yes" : "no";
+  $plexvera_running = file_exists( "/boot/config/plugins/plexvera/bin/plexVera.php.pid") ? "yes" : "no";
 }
 ?>
     <div style="width: 49%; float:left">
@@ -161,8 +106,8 @@ if ($plexvera_installed=="yes")
 #!/bin/sh
 # start|stop|restart|updateplg PlexVera.
 
-DAEMON=/boot/config/plugins/plexVera/bin/plexVera.rb
-PIDFILE=/boot/config/plugins/plexVera/bin/plexVera.rb.pid
+DAEMON=/boot/config/plugins/plexVera/bin/plexVera.php
+PIDFILE=/boot/config/plugins/plexVera/bin/plexVera.php.pid
 RUNAS=nobody
 
 plexvera_start()
@@ -174,7 +119,7 @@ plexvera_start()
 
   echo "Starting PlexVera: $CMDLINE"
   sleep 1
-  sudo -H -u $RUNAS /bin/bash -c 'nohup '$DAEMON' > /dev/null 2>&1 &'
+  sudo -H -u $RUNAS /bin/bash -c 'nohup php $DAEMON > /dev/null 2>&1 &'
   echo "... OK"
   sleep 1
 }

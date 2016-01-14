@@ -1,6 +1,7 @@
 # PlexVera Temp files
 plexVera.log
 config.yaml
+config.ini
 
 # IDEA artifacts
 *.iml
