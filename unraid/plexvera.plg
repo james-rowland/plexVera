@@ -117,9 +117,10 @@ plexvera_start()
     return
   fi
 
+  CMDLINE="sudo -H -u $RUNAS /bin/bash -c 'nohup php '$DAEMON' > /dev/null 2>&1 &'"
   echo "Starting PlexVera: $CMDLINE"
   sleep 1
-  sudo -H -u $RUNAS /bin/bash -c 'nohup php $DAEMON > /dev/null 2>&1 &'
+  sudo -H -u $RUNAS /bin/bash -c 'nohup php '$DAEMON' > /dev/null 2>&1 &'
   echo "... OK"
   sleep 1
 }
@@ -134,6 +135,12 @@ plexvera_stop()
   echo "Stopping PlexVera..."
   sleep 1
   kill $(cat $PIDFILE)
+
+  # force remove PID file
+  if [ -r $PIDFILE ]; then
+    echo "Force removing PID file..."
+    rm $PIDFILE
+  fi
 
   echo "... OK"
   sleep 1
@@ -160,6 +167,11 @@ plexvera_updateplg()
     wget -q --no-check-certificate https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg
     /usr/local/sbin/installplg /boot/config/plugins/plexvera.plg
   fi
+  echo "Restarting service..."
+  sleep 1
+  plexvera_restart
+  echo "... OK"
+  sleep 1
 }
 
 case "$1" in
