@@ -107,14 +107,14 @@ function main()
     } else if ($isPlaying == false && $state != 'stopped') {
 			$state = 'stopped';
 			$isPlaying = false;
-			
-			sleep(1);
+
 			//$logger.info("Device: {$client->Player['title']}.  Video is stopped.  Turning lights back on.")
 			print "Device: {$client->Player['title']}.  Video is stopped.  Turning lights back on.\n";
 			$vera->transition($state);
     }
 		
-		sleep(2); 
+		// sleep for 1.0 seconds
+    usleep(1000000);
 
 	}
 
