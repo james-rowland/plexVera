@@ -163,14 +163,18 @@ plexvera_updateplg()
   [ -f plexvera.plg.old ] && rm -f plexvera.plg.old
   if [ -f plexvera.plg ]; then
     mv plexvera.plg plexvera.plg.old
-    echo "Updating plugin"
+    echo "Updating plugin..."
     wget -q --no-check-certificate https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg
     /usr/local/sbin/installplg /boot/config/plugins/plexvera.plg
   else
-    echo "Updating plugin"
+    echo "Updating plugin..."
     wget -q --no-check-certificate https://raw.githubusercontent.com/james-rowland/plexVera/master/unraid/plexvera.plg
     /usr/local/sbin/installplg /boot/config/plugins/plexvera.plg
   fi
+
+  echo "Updating plexVera.php..."
+  wget -N -P /boot/config/plugins/plexvera/bin -q --no-check-certificate https://raw.githubusercontent.com/james-rowland/plexVera/master/bin/plexVera.php
+
   echo "Restarting service..."
   sleep 1
   plexvera_restart
@@ -202,14 +206,6 @@ esac
     <INLINE>
       <![CDATA[
 cd /boot/config/plugins/plexvera
-
-echo 'Installing bundler...'
-gem install bundler
-echo 'Finished.'
-
-echo 'Running bundle install...'
-bundle install
-echo 'Finished.'
 
 echo 'Running PlexVera...'
 /etc/rc.d/rc.plexvera start

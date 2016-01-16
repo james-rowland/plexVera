@@ -113,7 +113,7 @@ function main()
 			$vera->transition($state);
     }
 		
-		// sleep for 1.0 seconds
+    // sleep for 1.0 seconds
     usleep(1000000);
 
 	}
