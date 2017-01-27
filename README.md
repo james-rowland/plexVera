@@ -45,7 +45,7 @@ Build image:
 $ docker build -t <name>/plex-vera .
 
 Run image:
-$ docker run --net=host -p 51826:51826 <name>/plex-vera
+$ docker run --net=host -p 32400:32400 -p 3480:3480 -v /config:/config <name>/plex-vera
 
 One liner to stop / remove all of Docker containers:
 $ docker stop $(docker ps -a -q)

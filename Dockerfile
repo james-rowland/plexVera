@@ -34,7 +34,6 @@ RUN \
 # copy local files
 COPY root/ /
 COPY bin/ /plex-vera-app/bin
-COPY config.ini /plex-vera-app/
 
 # ports and volumes
 VOLUME /config

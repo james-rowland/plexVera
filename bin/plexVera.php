@@ -11,7 +11,7 @@ function initialize()
 	register_shutdown_function('terminate');
 	
 	try {
-		$config_path = dirname(__FILE__) . '/../config.ini';
+		$config_path = '/config/config.ini';
 		if(!file_exists($config_path)) {
 			throw new Exception("File not found.\n");
 		}
@@ -20,7 +20,10 @@ function initialize()
         $GLOBALS['logger'] = new logger();
 		
 	} catch (Exception $e) {
-		exit("Configuration file not found.  Exiting...\n");
+        print "Configuration file not found. Sleeping for 60 seconds... ";
+        // sleep for 60.0 seconds
+        usleep(60000000);
+        exit("Exiting.\n");
 	}
 	echo "Starting up PlexVera...\n";
 }
