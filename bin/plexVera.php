@@ -45,9 +45,9 @@ function main()
         if ($nowPlaying['size'] == 1) {
           $client = $nowPlaying->Video;
 
-          //if ($client->Player['machineIdentifier'] == '') {
-          //    exit("No [machineIdentifier] available. Exiting...");
-          //}
+          if($config['plex']['machineIdentifier'] == '') {
+            print "No machineIdentifier set in config. Current Plex Device [{$client->Player['machineIdentifier']}]";
+          }
 
           if ($client->Player['machineIdentifier'] == $config['plex']['machineIdentifier']) {
             if ($client->Player['state'] == 'playing') {
