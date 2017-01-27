@@ -37,3 +37,19 @@ This program runs scenes from Vera based on Plex playback.  It runs a user defin
 `scene_pause` - The scene number# you want to run when a video is paused.
 
 `scene_stop` - The scene number# you want to run when a video stops.
+
+
+## Docker HELP
+
+Build image:
+$ docker build -t <name>/plex-vera .
+
+Run image:
+$ docker run --net=host -p 51826:51826 <name>/plex-vera
+
+One liner to stop / remove all of Docker containers:
+$ docker stop $(docker ps -a -q)
+$ docker rm $(docker ps -a -q)
+
+And similar for all images:
+$  docker rmi $(docker images -q)

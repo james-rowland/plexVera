@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bash
+
+echo 'Exec PlexVera...'
+
+exec \
+  php /plex-vera-app/bin/plexVera.php
