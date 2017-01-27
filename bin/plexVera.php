@@ -20,7 +20,7 @@ function initialize()
         $GLOBALS['logger'] = new logger();
 		
 	} catch (Exception $e) {
-        print "Configuration file not found. Sleeping for 60 seconds... ";
+        print "Configuration file not found. Restarting in 60 seconds... ";
         // sleep for 60.0 seconds
         usleep(60000000);
         exit("Exiting.\n");
@@ -45,8 +45,11 @@ function main()
         if ($nowPlaying['size'] == 1) {
           $client = $nowPlaying->Video;
 
-          if($config['plex']['machineIdentifier'] == '') {
-            print "No machineIdentifier set in config. Current Plex Device [{$client->Player['machineIdentifier']}]";
+          if($config['plex']['machineIdentifier'] == '' || $config['plex']['machineIdentifier'] == '<machine_id>') {
+            print "No machineIdentifier set in config. Current Plex Device [{$client->Player['machineIdentifier']}]\n";
+            print "Update your config.ini. Restarting in 60 seconds... ";
+            usleep(60000000);  // sleep for 60.0 seconds
+            exit("Exiting.\n");
           }
 
           if ($client->Player['machineIdentifier'] == $config['plex']['machineIdentifier']) {
@@ -198,7 +201,7 @@ class Plex
         curl_close($ch);
 
         if($responseCode == 401) {
-            print "Error: 401 unauthorised. Check Plex Server->network->allowed networks setting. Sleeping for 60seconds...\n";
+            print "Error: 401 unauthorised. Check Plex Server->network->allowed networks setting. Sleeping for 60 seconds...\n";
             // sleep for 60.0 seconds
             usleep(60000000);
         }
